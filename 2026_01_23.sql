@@ -55,10 +55,12 @@ FROM emp;  -- ==> DISTINCT 함수 사용시 중복데이터가 사라진다.
 
 
 -- 문제9) 10과 3의 사칙연산의 결과를 출력하는 SQL문을 작성하시오. 
-
+-- # 나누기를 신경쓰자
 SELECT
   10 + 3 AS plus,
   10 - 3 AS minus,
   10 * 3 AS multiply,
-  10 / 3 AS divide;
-
+  10 / 3 AS divide,
+  10 % 3 AS remainder1,
+  MOD(10, 3) AS remainder2,
+  FLOOR(10 / 3) AS floor_divide;
