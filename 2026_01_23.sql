@@ -1,30 +1,21 @@
-
-
+-- 문제1) 급여등급, 최소급여, 최대급여를 검색(조회)하시오.
 SELECT grade, losal, hisal
 FROM salgrade;
 
-
+-- 문제2) 부서명과 부서위치를 출력하시오.
 SELECT dname, loc
 FROM dept;
 
+-- 문제3) 사원번호, 사원명, 입사일, 급여를 조회(출력)하시오.
 SELECT EMPNO, ENAME, HIREDATE, SAL
 FROM emp;
 
-SELECT '안녕, SQL~!!'
-FROM emp;
--- ==> 14번 출력
-/* 왜? 사원의 수가 14명 이기 때문에 */
-
-SELECT '안녕, SQL~!!'
-FROM dept;
--- ==> 4번 출력
--- => 1줄에 문자열을 출력하고 싶다. 1개의 행을 갖는 테이블이 필요!!
-
+-- 문제4) "안녕, SQL~!!"을 화면에 출력하시오.
 SELECT '안녕, SQL~!!'
 FROM dual;
--- => dual : 가상테이블(더미테이블), 한행이 입력되어 있고 특정한 테이블의 추가 
 
 
+-- 문제5) 화면에 사원번호와 사원명을 출력하시오.
 SELECT empno AS 사원번호,
        ename AS 사원명
 FROM emp;
@@ -39,23 +30,14 @@ FROM emp;
 
 -- 문제7) 사원들의 이름과 직책을 출력하시오.
 --        (출력변경 ==> SMITH사원의 직책은 CLERK입니다.)
-SELECT CONCAT(ename, '사원의 직책은 ', job, '입니다.') AS "사원직책"
+SELECT CONCAT(ename, '사원의 직책은 ', job, '입니다.') AS 출력결과
 FROM emp;
-# 행과 열을 맞추어 grid하게 출력
-# ==> 부드럽게 출력할수는 없을까?  해결) concat() 함수
-
 
 -- 문제8) 사원들이 갖는 직책을 출력하시오.
 --       (중복된 직책은 제거해서 출력)  : 직책의 종류
-SELECT job AS 직책
-FROM emp;  -- ==> 14명의 사원의 직책을 출력
+SELECT DISTINCT job 
+FROM emp;
 
-SELECT DISTINCT job AS 직책
-FROM emp;  -- ==> DISTINCT 함수 사용시 중복데이터가 사라진다. 
-
-
--- 문제9) 10과 3의 사칙연산의 결과를 출력하는 SQL문을 작성하시오. 
--- # 나누기를 신경쓰자
 SELECT
   10 + 3 AS plus,
   10 - 3 AS minus,
@@ -64,3 +46,141 @@ SELECT
   10 % 3 AS remainder1,
   MOD(10, 3) AS remainder2,
   FLOOR(10 / 3) AS floor_divide;
+
+
+
+
+-- WHERE절 --
+
+-- 문제1) 20번 부서에 근무하는 사원의 사원번호, 사원명, 직책, 급여를 출력하시오.
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       job   AS 직책,
+       sal   AS 급여
+FROM emp
+WHERE deptno = 20;
+
+--  
+
+-- 문제2) 직책이 MANAGER인 사원의 사원번호, 사원명, 직책, 입사일을 출력하시오.
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       job   AS 직책,
+       hiredate AS 입사일
+FROM emp
+WHERE job = 'MANAGER';
+
+
+-- 문제3) 급여가 2000 이상인 사원의 사원번호, 사원명, 급여를 출력하시오.
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       sal   AS 급여
+FROM emp
+WHERE sal >= 2000;
+
+
+-- 문제4) FORD사원의 사원번호, 사원명, 부서번호를 출력하시오.
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       deptno AS 부서번호
+FROM emp
+WHERE ename = 'FORD';
+
+
+
+-- 문제5) 1981년 6월 1일 이후에 입사한 사원의 사원번호, 사원명, 부서번호, 입사일을 출력하시오.
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       deptno AS 부서번호,
+       hiredate AS 입사일
+FROM emp
+WHERE hiredate > '1981-06-01';
+
+
+
+-- 문제6) 10번 부서에 근무하는 사원의 사원번호, 사원명, 매니저의 사원번호를 출력하시오.
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       mgr   AS 매니저사원번호
+FROM emp
+WHERE deptno = 10;
+
+
+-- 문제7) 20번과 30번 부서에 근무하는 사원의 사원번호, 사원명, 매니저의 사원번호를 출력하시오. 
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       mgr   AS 매니저사원번호
+FROM emp
+WHERE deptno IN (20, 30);
+
+
+-- 문제8) 10,20번 부서의 부서번호, 부서명, 부서위치를 조회하시오.
+SELECT deptno AS 부서번호,
+       dname  AS 부서명,
+       loc    AS 부서위치
+FROM dept
+WHERE deptno IN (10, 20);
+
+-- 문제9) 3등급 급여의 최소급여와 최대급여를 출력하시오.
+SELECT MIN(losal) AS 최소급여,
+       MAX(hisal) AS 최대급여
+FROM salgrade
+WHERE grade = 3;
+
+
+
+
+-- like 문
+-- 문제1) 사원명이 'A'로 시작되는 사원의 정보(사원번호,사원명,급여)를 출력하시오
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       sal   AS 급여
+FROM emp
+WHERE ename LIKE 'A%';
+
+-- 문제2) 사원명이 'S'로 끝나는 사원의 정보(사원번호,사원명,급여)를 출력하시오
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       sal   AS 급여
+FROM emp
+WHERE ename LIKE '%S';
+
+
+-- 문제3) 사원명에 'A'문자가 포함된 사원의 정보(사원번호,사원명,급여)를 출력하시오   
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       sal   AS 급여
+FROM emp
+WHERE ename LIKE '%A%';
+
+
+-- 문제4) 사원명의 세번째 문자에 'A'문자가 포함된 사원의 정보(사원번호,사원명,급여)를 출력하시오
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       sal   AS 급여
+FROM emp
+WHERE ename LIKE '__A%';
+
+
+-- 문제5) 사원명에 '%'문자가 포함된 사원의 정보(사원번호,사원명,급여)를 출력하시오
+INSERT INTO emp (empno, ename, sal)
+VALUES (8000, '홍%길동', 2500);
+
+INSERT INTO emp (empno, ename, sal)
+VALUES (8001, '%김주원', 2600);
+
+INSERT INTO emp (empno, ename, sal)
+VALUES (8002, '나주원%', 2700);
+
+
+SELECT empno AS 사원번호,
+       ename AS 사원명,
+       sal   AS 급여
+FROM emp
+WHERE ename LIKE '%#%%' ESCAPE '#';
+
+
+
+
+
+
