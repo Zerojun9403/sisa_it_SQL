@@ -27,6 +27,9 @@ SELECT empno AS 사원번호,
        sal   AS 급여,
        sal * 12 AS 연봉
 FROM emp;
+# 행과 열을 맞추어 grid하게 출력
+# ==> 부드럽게 출력할수는 없을까?  해결) concat() 함수
+
 
 -- 문제7) 사원들의 이름과 직책을 출력하시오.
 --        (출력변경 ==> SMITH사원의 직책은 CLERK입니다.)
